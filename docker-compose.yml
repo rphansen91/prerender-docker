@@ -1,0 +1,31 @@
+version: '3'
+services:
+  prerender-server:
+    image: prerender-server
+    ports:
+      - "3000:3000"
+    restart: always
+    # security_opt:
+    #   - $HOME/chrome.json
+    # devices:
+    #   - /dev/dri
+    volumes:
+      - /dev/shm:/dev/shm
+    cap_add:
+      - SYS_ADMIN
+  prerender-agent:
+    image: prerender-agent
+    links:
+      - prerender-server
+    depends_on:
+      - prerender-server
+    environment:
+      LOGGER: ${LOGGER}
+      PUBLIC: ${PUBLIC_DIST}
+      PRERENDER_URL: ${PRERENDER_URL}
+      PRERENDER_TOKEN: ${PRERENDER_TOKEN}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ${PUBLIC_SRC}:${PUBLIC_DIST}
+

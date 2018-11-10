@@ -1,0 +1,23 @@
+{
+  "name": "prerender-docker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "concurrently \"npm run build:server\" \"npm run build:agent\"",
+    "build:server": "docker build -t prerender-server ./prerender-server",
+    "build:agent": "docker build -t prerender-agent ./prerender-agent",
+    "push": "concurrently \"npm run push:server\" \"npm run push:agent\"",
+    "push:server": "docker push prerender-server",
+    "push:agent": "docker push prerender-agent",
+    "start": "docker-compose up",
+    "stop": "docker-compose down"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
