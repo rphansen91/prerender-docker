@@ -4,11 +4,11 @@ Prerender web applications by supplying the web app src as a volume.
 
 ## Build Images
 
-npm run build
+`npm run build`
 
 ## Start Docker Compose
 
-npm start
+`npm start`
 
 ## Variables
 
