@@ -1,6 +1,6 @@
 ## Prerender Docker
 
-Prerender web applications by supplying the static src as a volume.
+Prerender web applications by supplying the web app src as a volume.
 
 # Build Images
 
