@@ -1,16 +1,16 @@
-## Prerender Docker
+# Prerender Docker
 
 Prerender web applications by supplying the web app src as a volume.
 
-# Build Images
+## Build Images
 
 npm run build
 
-# Start Docker Compose
+## Start Docker Compose
 
 npm start
 
-# Variables
+## Variables
 
 ```.env
 
