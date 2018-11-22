@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "force-secure-express": "^1.0.0",
     "node-logger": "0.0.1",
     "on-finished": "^2.3.0",
     "on-headers": "^1.0.1",
