@@ -20,12 +20,12 @@ services:
     depends_on:
       - prerender-server
     environment:
-      LOGGER: ${LOGGER}
-      PUBLIC: ${PUBLIC_DIST}
-      PRERENDER_URL: ${PRERENDER_URL}
+      LOGGER: ${LOGGER:-debug}
+      PUBLIC: ${PUBLIC_DIST:-/src/app/public}
+      PRERENDER_URL: ${PRERENDER_URL:-http://prerender-server:3000}
       PRERENDER_TOKEN: ${PRERENDER_TOKEN}
     ports:
       - "8080:8080"
     volumes:
-      - ${PUBLIC_SRC}:${PUBLIC_DIST}
+      - ${PUBLIC_SRC:-./prerender-agent/public}:${PUBLIC_DIST:-/src/app/public}
 
