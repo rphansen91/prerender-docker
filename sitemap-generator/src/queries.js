@@ -1,6 +1,6 @@
 const supplyListingsQuery = `
   {
-    supplyListings(params: {}) {
+    listings(params: {}) {
       url
       createdDate
     }

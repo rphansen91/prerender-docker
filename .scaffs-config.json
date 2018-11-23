@@ -1,0 +1,5 @@
+{
+    "scaffs": {
+        "GQL Resource": "../../../scaffs/gql/resource"
+    }
+}

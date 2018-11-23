@@ -29,6 +29,8 @@ module.exports = gql`
     userType: Int
     username: String
     listings: [Listing]
+    chats(params: ChatQuery = {}): [Chat]
+    unread: Int
   }
 
   extend type Query {

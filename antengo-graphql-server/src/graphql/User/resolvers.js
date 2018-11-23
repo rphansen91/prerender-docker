@@ -1,4 +1,5 @@
 const { getPublicProfile, getPrivateProfile } = require("../../api/user");
+const { getUnreadMessages, getChats } = require("../../api/chat");
 
 module.exports = {
   Query: {
@@ -12,6 +13,7 @@ module.exports = {
     user_rm: (root, args, ctx) => {},
   },
   User: {
-
+    unread: (root, args, { token }) => getUnreadMessages({ token }),
+    chats: (root, { params }, { token }) => getChats(Object.assign({ token }, params)),
   }
 }
