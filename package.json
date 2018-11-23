@@ -24,13 +24,19 @@
     "release": "npm run build && npm run tag && npm run auth && npm run push",
     "start": "docker-compose up",
     "stop": "docker-compose down",
-    "conn": "ssh -i ${PEM:?\"Path to pem required\"} -t ec2-user@${EC2:?\"EC2 dns required\"}"
+    "conn": "ssh -i ${PEM:?\"Path to pem required\"} ec2-user@${EC2:?\"EC2 dns required\"}",
+    "conn:prod": "nodenv --env .env.prod --exec \"npm run conn\"",
+    "conn:staging": "nodenv --env .env.staging --exec \"npm run conn\"",
+    "deploy": "scp -i ${PEM:?\"Path to pem required\"} -r ${DIST:?\"Path to dist required\"} ec2-user@${EC2:?\"EC2 dns required\"}:./data/sellwild",
+    "deploy:prod": "nodenv --env .env.prod --exec \"npm run deploy\"",
+    "deploy:staging": "nodenv --env .env.staging --exec \"npm run deploy\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "node-env-run": "^3.0.2"
   },
   "dependencies": {
     "express": "^4.16.4",
