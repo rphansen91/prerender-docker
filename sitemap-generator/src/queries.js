@@ -1,4 +1,4 @@
-const supplyListingsQuery = `
+const listingsQuery = `
   {
     listings(params: {}) {
       url
@@ -8,5 +8,5 @@ const supplyListingsQuery = `
 `
 
 module.exports = {
-  supplyListingsQuery
+  listingsQuery
 }

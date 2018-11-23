@@ -1,6 +1,7 @@
 const { resolve } = require("path");
 const { logger, createMiddlewareLogger } = require("./logger");
 const prerenderConfig = require("./config");
+const proxy = require('express-http-proxy');
 const forceSecure = require("force-secure-express");
 const prerender = require("prerender-node");
 const express = require("express");
@@ -22,6 +23,8 @@ app.use(prerenderConfig({
 app.use(forceSecure(secureUrls));
 
 app.use(express.static(staticPath));
+
+process.env.SITEMAP_URL && app.get("/sitemap.xml", proxy(process.env.SITEMAP_URL));
 
 app.get("*", (req, res) => {
   res.sendFile(staticHtml)

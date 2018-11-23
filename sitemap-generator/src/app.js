@@ -1,12 +1,12 @@
 const { resolve } = require("path");
 const { logger, createMiddlewareLogger } = require("./logger");
-const { supplyListingsQuery } = require("./queries");
+const { listingsQuery } = require("./queries");
 const { sitemap, sitemapUrl } = require("./sitemap");
 const express = require("express");
-const fetch = require("node-fetch");
+const fetch = require("isomorphic-fetch");
 const app = express();
 
-const port = Number(process.env.PORT) || 6006;
+const port = Number(process.env.PORT) || 4000;
 const graphqlUrl = process.env.GRAPHQL || "http://localhost:5000/graphql";
 
 const base = process.env.BASE_URL || "";
@@ -22,12 +22,12 @@ app.get("/sitemap.xml", (req, res) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ query: supplyListingsQuery })
+    body: JSON.stringify({ query: listingsQuery })
   })
   .then(r => r.json())
   .then(r => {
     if (r.errors) throw r.errors[0];
-    return r.data.supplyListings;
+    return r.data.listings;
   })
   .then(data => {
     res.writeHead(200, {
