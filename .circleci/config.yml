@@ -18,13 +18,13 @@ jobs:
       
       - run: docker-compose build
 
-      - run: docker images -q
+      - run: docker images docker images --format="{{.Repository}}"
 
       - run:
           name: Save image to an archive
           command: |
             mkdir docker-image
-            docker save -o docker-image/image.tar $(docker images -q)
+            docker save -o docker-image/image.tar $(docker images docker images --format="{{.Repository}}")
 
       - persist_to_workspace:
           root: .
@@ -61,7 +61,7 @@ jobs:
           name: Load image
           command: |
             docker load --input workspace/docker-image/image.tar
-            docker images -q
+            docker images --format="{{.Repository}}"
       - run:
           name: Login
           command: |
