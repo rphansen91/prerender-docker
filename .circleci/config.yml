@@ -1,10 +1,14 @@
 version: 2
 jobs:
   build:
+
     docker:
       - image: circleci/node:7.10
+
     working_directory: ~/repo
+
     steps:
+    
       - run:
         name: Install Docker Compose
         command: |
@@ -12,9 +16,13 @@ jobs:
           chmod +x ~/docker-compose
           sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
-      - setup_remote_docker
+      - run:
+        name: Setup remote docker
+        command: setup_remote_docker
 
-      - checkout
+      - run:
+        name: Checkout repo
+        command: checkout
 
       - run:
         name: Build Images
