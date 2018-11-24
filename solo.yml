@@ -1,0 +1,15 @@
+version: '3'
+services:
+  prerender-agent:
+    build: ./prerender-agent
+    image: ${REGISTRY}prerender-agent
+    environment:
+      PORT: "8080"
+      LOGGER: ${LOGGER:-info}
+      PUBLIC: ${PUBLIC_DIST:-/src/app/public}
+      PRERENDER_URL: ${PRERENDER_URL:-https://service.prerender.io/}
+      PRERENDER_TOKEN: ${PRERENDER_TOKEN?:"Prerender token is required"}
+    ports:
+      - "80:8080"
+    volumes:
+      - ${PUBLIC_SRC:-./prerender-agent/public}:${PUBLIC_DIST:-/src/app/public}
