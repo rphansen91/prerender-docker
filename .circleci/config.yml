@@ -26,10 +26,10 @@ jobs:
           command: |
             echo 'export REGISTRY="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
 
-      - run: docker-compose build
-
       - run: sudo pip install awscli
-
+      
+      - run: docker-compose build
+      
       - run: $(aws ecr get-login --no-include-email)
 
       - run: docker-compose push
