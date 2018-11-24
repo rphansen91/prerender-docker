@@ -18,6 +18,8 @@ jobs:
       
       - run: docker-compose build
 
+      - run: docker images -q
+
       - run:
           name: Save image to an archive
           command: |
@@ -59,6 +61,7 @@ jobs:
           name: Load image
           command: |
             docker load --input workspace/docker-image/image.tar
+            docker images -q
       - run:
           name: Login
           command: |
