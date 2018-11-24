@@ -22,7 +22,7 @@ jobs:
           name: Save image to an archive
           command: |
             mkdir docker-image
-            docker save -o docker-image/image.tar
+            docker save -o docker-image/image.tar .
 
       - persist_to_workspace:
           root: .
