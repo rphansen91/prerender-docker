@@ -63,12 +63,9 @@ jobs:
             docker load --input workspace/docker-image/image.tar
             docker images --format="{{.Repository}}"
       - run:
-          name: Login
-          command: |
-            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - run:
           name: Push images
           command: |
+            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker-compose push
 workflows:
   version: 2
