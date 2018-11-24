@@ -33,30 +33,25 @@ jobs:
 
   deploy:  
     docker:
-      - image: circleci/python:3.6.1
-    environment:
-      AWS_DEFAULT_OUTPUT: json
+      - image: circleci/openjdk:8-jdk
     steps:
       - checkout
       - setup_remote_docker
       - attach_workspace:
           at: workspace
-      - restore_cache:
-          key: v1-{{ checksum "requirements.txt" }}
       - run:
           name: Set convenience environment variables
           command: |
             echo 'export REGISTRY="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
       - run:
-          name: Install awscli
+          name: install aws
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
-      - save_cache:
-          key: v1-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+      - run:
+          name: "Log in to AWS ECR"
+          command: eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - run:
           name: Load image
           command: |
@@ -65,8 +60,6 @@ jobs:
       - run:
           name: Push images
           command: |
-            sudo apt-get update && sudo apt-get install -y awscli
-            $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker-compose push
 workflows:
   version: 2
