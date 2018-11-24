@@ -18,13 +18,13 @@ jobs:
       
       - run: docker-compose build
 
-      - run: docker images docker images --format="{{.Repository}}"
+      - run: docker images --format="{{.Repository}}"
 
       - run:
           name: Save image to an archive
           command: |
             mkdir docker-image
-            docker save -o docker-image/image.tar $(docker images docker images --format="{{.Repository}}")
+            docker save -o docker-image/image.tar $(docker images --format="{{.Repository}}")
 
       - persist_to_workspace:
           root: .
