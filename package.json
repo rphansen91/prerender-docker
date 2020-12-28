@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "on-finished": "^2.3.0",
     "on-headers": "^1.0.1",
     "winston": "^3.1.0"
