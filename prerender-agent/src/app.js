@@ -3,6 +3,7 @@ const { logger, createMiddlewareLogger } = require("./logger");
 const prerenderConfig = require("./config");
 const proxy = require('express-http-proxy');
 const forceSecure = require("force-secure-express");
+const staticGzip = require("express-static-gzip");
 const prerender = require("prerender-node");
 const express = require("express");
 const app = express();
@@ -21,12 +22,31 @@ app.use(prerenderConfig({
 }, prerender));
 
 app.use(forceSecure(secureUrls));
-
-app.use(express.static(staticPath));
+app.get("*.js", (req, res, next) => {
+  console.log(req.url)
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/html');
+  next()
+})
+app.get("/", (req, res, next) => {
+  console.log(req.url)
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/html');
+  next()
+})
+app.get("*.html", (req, res, next) => {
+  console.log(req.url)
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/html');
+  next()
+});
+app.use(staticGzip(staticPath));
 
 process.env.SITEMAP_URL && app.get("/sitemap.xml", proxy(process.env.SITEMAP_URL));
 
 app.get("*", (req, res) => {
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/html');
   res.sendFile(staticHtml)
 });
 

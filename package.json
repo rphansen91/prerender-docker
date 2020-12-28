@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"${NODE_ENV}\"",
     "auth": "$(aws ecr get-login --no-include-email)",
-    "start": "docker-compose up",
+    "start": "nodenv --env .env.solo --exec \"docker-compose up --build\"",
     "stop": "docker-compose down",
     "push": "npm run auth && docker-compose push",
     "push:prod": "nodenv --env .env.prod --exec \"npm run push\"",
@@ -14,9 +14,18 @@
     "conn": "ssh -i ${PEM:?\"Path to pem required\"} ec2-user@${EC2:?\"EC2 dns required\"}",
     "conn:prod": "nodenv --env .env.prod --exec \"npm run conn\"",
     "conn:staging": "nodenv --env .env.staging --exec \"npm run conn\"",
+    "apply": "scp -i ${PEM:?\"Path to pem required\"} ${COMPOSE:-./docker-compose.yml} ec2-user@${EC2:?\"EC2 dns required\"}:./docker-compose.yml",
+    "apply:prod": "nodenv --env .env.prod --exec \"npm run apply\"",
+    "apply:staging": "nodenv --env .env.staging --exec \"npm run apply\"",
+    "sup": "npm run conn -- -t \"docker-compose up -d\"",
+    "sup:prod": "nodenv --env .env.prod --exec \"npm run sup\"",
+    "sup:staging": "nodenv --env .env.staging --exec \"npm run sup\"",
     "deploy": "scp -i ${PEM:?\"Path to pem required\"} -r ${DIST:?\"Path to dist required\"} ec2-user@${EC2:?\"EC2 dns required\"}:./data/sellwild",
     "deploy:prod": "nodenv --env .env.prod --exec \"npm run deploy\"",
-    "deploy:staging": "nodenv --env .env.staging --exec \"npm run deploy\""
+    "deploy:staging": "nodenv --env .env.staging --exec \"npm run deploy\"",
+    "pull": "scp -i ${PEM:?\"Path to pem required\"} -r ec2-user@${EC2:?\"EC2 dns required\"}:./data/sellwild .tmp",
+    "pull:prod": "nodenv --env .env.prod --exec \"npm run pull\"",
+    "pull:staging": "nodenv --env .env.staging --exec \"npm run pull\""
   },
   "keywords": [],
   "author": "",
