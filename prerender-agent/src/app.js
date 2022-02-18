@@ -40,6 +40,9 @@ app.get("*.html", (req, res, next) => {
   res.set('Content-Type', 'text/html');
   next()
 });
+app.get("ads.txt", (req, res) => {
+  res.redirect("//config.playwire.com/dyn_ads/1024584/73410/ads.txt")
+});
 app.use(staticGzip(staticPath));
 
 process.env.SITEMAP_URL && app.get("/sitemap.xml", proxy(process.env.SITEMAP_URL));
